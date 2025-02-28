@@ -1,5 +1,5 @@
 const user_db = require('./Models/userModel')
-const food_db = require('./Models/foodModel.js')
+
 const db_connect = require('./Database/dbconnection.js')
 const express = require('express')
 const cors = require('cors')
@@ -59,44 +59,7 @@ app.post('/api/user/register', function(request, response){
     })
 })
 
-app.get('/api/food', function(request, response){
-    console.log('Request Queries from Front End: ', request.query)
-    let {filterQuery, searchQuery} = request.query
 
-    if(filterQuery === 'all' && searchQuery === ''){
-        food_db.find()
-        .then(function(result){
-            console.log('Food data:', result.length)
-            response.status(200).json(result)
-        })
-        .catch(function(error){
-            response.json({message: "Failed to Fetch Food items data", err: error})
-        })
-    }
-    else if(filterQuery === 'all' && searchQuery !== ''){
-        food_db.find({name: {$regex: searchQuery, $options: "i"}})
-        .then(function(result){
-            console.log('Food data:', result.length)
-            response.status(200).json(result)
-        })
-        .catch(function(error){
-            response.json({message: "Failed to Fetch Food items data", err: error})
-        })
-
-    }
-    else{
-        food_db.find({name: {$regex: searchQuery, $options: "i"}, category: {$regex: filterQuery, $options: "i"}})
-        .then(function(result){
-            console.log('Food data:', result.length)
-            response.status(200).json(result)
-        })
-        .catch(function(error){
-            response.json({message: "Failed to Fetch Food items data", err: error})
-        })
-
-    }
-
-})
 
 let port = 2323
 
