@@ -119,6 +119,20 @@ app.post('/api/food/addFoodItem', function(request, response){
 })
 
 
+app.delete('/api/food/deleteFoodItem/:id', function(request, response){
+    console.log('Food ID from frontEnd: ', request.params)
+   
+
+    food_db.deleteOne({_id: request.params.id})
+    .then(function(result){
+        response.json({message: 'deleted data successfully', result: result})
+    })
+    .catch(function(error){
+        response.json({message: "Got some while deleting food item", err: error})
+    })
+
+})
+
 let port = 2323
 
 app.listen(port, function(){
