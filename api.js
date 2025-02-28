@@ -64,13 +64,33 @@ app.post('/api/user/register', function(request, response){
 
 app.get('/api/food', function(request, response){
     console.log('Queries from frotend: ', request.query)
-    food_db.find()
-    .then(function(result){
+    let {filterQuery, searchQuery} = request.query
+
+    if(filterQuery === 'all' && searchQuery === "" ){
+        food_db.find()
+        .then(function(result){
         response.json(result)
-    })
-    .catch(function(error){
+        })
+        .catch(function(error){
         response.json({message: "Failed to fetch food data", err: error})
-    })
+        })
+}
+    else{
+        food_db.find({name: {$regex: searchQuery, $options: "i"}, category: {$regex: filterQuery, $options: "i"}})
+        .then(function(result){
+            response.json(result)
+        })
+        .catch(function(error){
+            response.json({message: "Failed to fetch food data", err: error})
+        })
+
+
+    }
+
+    
+
+    
+    
 })
 
 
