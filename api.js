@@ -74,6 +74,21 @@ app.get('/api/food', function(request, response){
 })
 
 
+
+app.post('/api/food/addFoodItem', function(request, response){
+    console.log('Food data from frontEnd: ', request.body)
+    let {name, category, description, price, image} = request.body
+
+    food_db.insertOne({name, category, description, price, image})
+    .then(function(result){
+        response.json({message: 'Inserted data successfully', result: result})
+    })
+    .catch(function(error){
+        response.json({message: "Got some while inserting food item", err: error})
+    })
+})
+
+
 let port = 2323
 
 app.listen(port, function(){

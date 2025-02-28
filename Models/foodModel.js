@@ -7,7 +7,7 @@ const mongoose  = require('mongoose')
 let foodSchema = mongoose.Schema({
     category: String,
     name: String,
-    desciption: String,
+    description: String,
     price: String,
     image: String
 })
