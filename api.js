@@ -75,6 +75,16 @@ app.get('/api/food', function(request, response){
         response.json({message: "Failed to fetch food data", err: error})
         })
 }
+else if(filterQuery === 'all' && searchQuery !== ''){
+    food_db.find({name: {$regex: searchQuery, $options: "i"}})
+        .then(function(result){
+            response.json(result)
+        })
+        .catch(function(error){
+            response.json({message: "Failed to fetch food data", err: error})
+        })
+
+}
     else{
         food_db.find({name: {$regex: searchQuery, $options: "i"}, category: {$regex: filterQuery, $options: "i"}})
         .then(function(result){
