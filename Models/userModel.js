@@ -7,7 +7,8 @@ let userSchema = mongoose.Schema({
         type: String,
         unique: true
     },
-    password: String
+    password: String,
+    role: String
 })
 
 let user_db = mongoose.model('user', userSchema)

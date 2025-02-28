@@ -1,4 +1,5 @@
 const user_db = require('./Models/userModel')
+const food_db = require('./Models/foodModel.js')
 
 const db_connect = require('./Database/dbconnection.js')
 const express = require('express')
@@ -47,7 +48,7 @@ app.post('/api/user/register', function(request, response){
 
     let {fullname, email, password} = request.body
 
-    user_db.insertOne({fullname, email, password})
+    user_db.insertOne({fullname, email, password, role: "user"})
     .then(function(result){
         console.log(result)
         response.status(201).json({message: "Successfully added data into Database", res: result})
@@ -59,6 +60,18 @@ app.post('/api/user/register', function(request, response){
     })
 })
 
+
+
+app.get('/api/food', function(request, response){
+    console.log('Queries from frotend: ', request.query)
+    food_db.find()
+    .then(function(result){
+        response.json(result)
+    })
+    .catch(function(error){
+        response.json({message: "Failed to fetch food data", err: error})
+    })
+})
 
 
 let port = 2323
